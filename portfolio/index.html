@@ -21,8 +21,8 @@
 			.project-tile.tile-law { background: linear-gradient(135deg, #1a2f45, #0d1b2a); }
 			.project-tile.tile-salon { background: linear-gradient(135deg, #a16207, #713f12); }
 			.project-links { display: flex; flex-wrap: wrap; gap: 0.5rem 1.25rem; align-items: center; }
-			.project-links .brand-btn { background: transparent; border: 1px solid rgba(255,255,255,0.65); color: #ffffff; font-size: 0.7rem; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 600; padding: 0.45rem 0.9rem; border-radius: 4px; cursor: pointer; }
-			.project-links .brand-btn:hover { background: rgba(255,255,255,0.15); }
+			.project-links .brand-btn { appearance: none; background: none; border: 0; box-shadow: none; border-bottom: dotted 1px rgba(255,255,255,0.5); border-radius: 0; height: auto; line-height: inherit; padding: 0; color: #ffffff; font-family: inherit; font-size: 0.8rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; cursor: pointer; white-space: nowrap; }
+			.project-links .brand-btn:hover { border-bottom-color: transparent; background: none; }
 			/* Brand board popup */
 			.brand-modal { position: fixed; inset: 0; z-index: 10000; display: none; align-items: center; justify-content: center; padding: 0.75rem; background: rgba(10,12,14,0.88); }
 			.brand-modal.open { display: flex; }
@@ -31,7 +31,6 @@
 			.brand-modal-close { position: absolute; top: 0.35rem; right: 0.75rem; background: none; border: 0; color: #ffffff; font-size: 1.8rem; line-height: 1; cursor: pointer; padding: 0.25rem; }
 			.brand-modal-frame { flex: 1; min-height: 0; overflow: hidden; border-radius: 4px; background: #ffffff; }
 			.brand-modal-frame iframe { display: block; width: 100%; height: 68vh; border: 0; }
-			.brand-modal-open { margin-top: 0.75rem; align-self: flex-start; }
 			#header .logo .logo-letter { font-size: 2rem; font-weight: 600; color: #ffffff; }
 		</style>
 	</head>
@@ -169,25 +168,22 @@
 					<div class="brand-modal-frame">
 						<iframe id="brand-modal-iframe" title="Brand board" allowfullscreen="allowfullscreen" allow="fullscreen"></iframe>
 					</div>
-					<a id="brand-modal-open" class="button small" href="#" target="_blank" rel="noopener">Open in Canva</a>
 				</div>
 			</div>
 			<script>
 			(function () {
 				var designs = {
-					dental: { title: 'Willow Bend Dental Studio \u2014 Brand Board', embed: 'https://www.canva.com/design/DAHbBfIz9pI/view?embed', link: 'https://canva.link/8bejrdmby80hk6c' },
-					law: { title: 'Hawthorne Law Group \u2014 Brand Board', embed: 'https://www.canva.com/design/DAHbBar6AIY/view?embed', link: 'https://canva.link/pqeaedq5vh4a7hg' },
-					salon: { title: 'Lumi\u00e8re Salon & Spa \u2014 Brand Board', embed: 'https://www.canva.com/design/DAHbBdb8ZVk/view?embed', link: 'https://canva.link/95amr91wqsko159' }
+					dental: { title: 'Willow Bend Dental Studio — Brand Board', embed: 'https://www.canva.com/design/DAHbBfIz9pI/view?embed' },
+					law: { title: 'Hawthorne Law Group \u2014 Brand Board', embed: 'https://www.canva.com/design/DAHbBar6AIY/view?embed' },
+					salon: { title: 'Lumi\u00e8re Salon & Spa \u2014 Brand Board', embed: 'https://www.canva.com/design/DAHbBdb8ZVk/view?embed' }
 				};
 				var modal = document.getElementById('brand-modal');
 				var iframe = document.getElementById('brand-modal-iframe');
 				var title = document.getElementById('brand-modal-title');
-				var openLink = document.getElementById('brand-modal-open');
 				function openBrand(key) {
 					var d = designs[key];
 					if (!d) return;
 					title.textContent = d.title;
-					openLink.href = d.link;
 					iframe.src = d.embed;
 					modal.classList.add('open');
 					modal.setAttribute('aria-hidden', 'false');
