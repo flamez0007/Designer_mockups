@@ -692,7 +692,7 @@ textarea.form-control { min-height: 120px; resize: vertical; }
 .d-grid-gap { display: grid; gap: 1rem; }
 
 
-/* ---- Sunrise v2 overrides ---- */
+/* ---- Willow Bend v2 overrides ---- */
 @media (min-width: 992px){ .team-grid{ grid-template-columns: repeat(4, 1fr); } }
 @media (min-width: 768px) and (max-width: 991.98px){ .team-grid{ grid-template-columns: repeat(2, 1fr); } }
 .footer-map{ display:inline-block; padding:.75rem 1rem; background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.18); border-radius:10px; color:#fff; text-decoration:none; font-size:.9rem; font-weight:600; }
