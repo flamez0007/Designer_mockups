@@ -800,6 +800,7 @@ a:hover { color: var(--amber); }
     box-shadow: var(--shadow-sm);
   }
   .brand { font-size: 1.25rem; white-space: nowrap; }
+  .brand small { display: none; }
   .nav-cta .btn { display: none; }
   .nav-cta .nav-phone { display: none; }
   .nav-toggle { display: inline-flex; }
