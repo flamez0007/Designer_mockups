@@ -20,6 +20,18 @@
 			.project-tile.tile-dental { background: linear-gradient(135deg, #0f766e, #134e4a); }
 			.project-tile.tile-law { background: linear-gradient(135deg, #1a2f45, #0d1b2a); }
 			.project-tile.tile-salon { background: linear-gradient(135deg, #a16207, #713f12); }
+			.project-links { display: flex; flex-wrap: wrap; gap: 0.5rem 1.25rem; align-items: center; }
+			.project-links .brand-btn { background: transparent; border: 1px solid rgba(255,255,255,0.65); color: #ffffff; font-size: 0.7rem; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 600; padding: 0.45rem 0.9rem; border-radius: 4px; cursor: pointer; }
+			.project-links .brand-btn:hover { background: rgba(255,255,255,0.15); }
+			/* Brand board popup */
+			.brand-modal { position: fixed; inset: 0; z-index: 10000; display: none; align-items: center; justify-content: center; padding: 0.75rem; background: rgba(10,12,14,0.88); }
+			.brand-modal.open { display: flex; }
+			.brand-modal-box { position: relative; width: min(560px, 100%); max-height: 94vh; display: flex; flex-direction: column; background: #1b1f24; border: 1px solid rgba(255,255,255,0.18); border-radius: 8px; padding: 1rem; }
+			.brand-modal-box h3 { margin: 0 2rem 0.75rem 0; font-size: 1rem; letter-spacing: 0.02em; text-transform: none; color: #ffffff; }
+			.brand-modal-close { position: absolute; top: 0.35rem; right: 0.75rem; background: none; border: 0; color: #ffffff; font-size: 1.8rem; line-height: 1; cursor: pointer; padding: 0.25rem; }
+			.brand-modal-frame { flex: 1; min-height: 0; overflow: hidden; border-radius: 4px; background: #ffffff; }
+			.brand-modal-frame iframe { display: block; width: 100%; height: 68vh; border: 0; }
+			.brand-modal-open { margin-top: 0.75rem; align-self: flex-start; }
 			#header .logo .logo-letter { font-size: 2rem; font-weight: 600; color: #ffffff; }
 		</style>
 	</head>
@@ -69,17 +81,26 @@
 								<div class="project-tile tile-dental">
 									<h3>Willow Bend Dental Studio</h3>
 									<p>Website design concept for a dental studio in Houston.</p>
+									<div class="project-links">
 									<a class="view" href="https://flamez0007.github.io/Designer_mockups/sunrise-dental-center-v2/" target="_blank" rel="noopener">View the design</a>
+									<button type="button" class="brand-btn" data-brand="dental">Branding</button>
+								</div>
 								</div>
 								<div class="project-tile tile-law">
 									<h3>Hawthorne Law Group</h3>
 									<p>Website design concept for a law firm in Atlanta.</p>
+									<div class="project-links">
 									<a class="view" href="https://flamez0007.github.io/Designer_mockups/stoutmire-law-v2/" target="_blank" rel="noopener">View the design</a>
+									<button type="button" class="brand-btn" data-brand="law">Branding</button>
+								</div>
 								</div>
 								<div class="project-tile tile-salon">
 									<h3>Lumière Salon &amp; Spa</h3>
 									<p>Website design concept for a salon &amp; spa in Atlanta.</p>
+									<div class="project-links">
 									<a class="view" href="https://flamez0007.github.io/Designer_mockups/atlanta-international-salon-spa-v2/" target="_blank" rel="noopener">View the design</a>
+									<button type="button" class="brand-btn" data-brand="salon">Branding</button>
+								</div>
 								</div>
 							</article>
 
@@ -139,6 +160,54 @@
 			<script src="assets/js/breakpoints.min.js"></script>
 			<script src="assets/js/util.js"></script>
 			<script src="assets/js/main.js"></script>
+
+		<!-- Brand board popup -->
+			<div id="brand-modal" class="brand-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="brand-modal-title">
+				<div class="brand-modal-box">
+					<button type="button" class="brand-modal-close" aria-label="Close">&times;</button>
+					<h3 id="brand-modal-title"></h3>
+					<div class="brand-modal-frame">
+						<iframe id="brand-modal-iframe" title="Brand board" allowfullscreen="allowfullscreen" allow="fullscreen"></iframe>
+					</div>
+					<a id="brand-modal-open" class="button small" href="#" target="_blank" rel="noopener">Open in Canva</a>
+				</div>
+			</div>
+			<script>
+			(function () {
+				var designs = {
+					dental: { title: 'Willow Bend Dental Studio \u2014 Brand Board', embed: 'https://www.canva.com/design/DAHbBfIz9pI/view?embed', link: 'https://canva.link/8bejrdmby80hk6c' },
+					law: { title: 'Hawthorne Law Group \u2014 Brand Board', embed: 'https://www.canva.com/design/DAHbBar6AIY/view?embed', link: 'https://canva.link/pqeaedq5vh4a7hg' },
+					salon: { title: 'Lumi\u00e8re Salon & Spa \u2014 Brand Board', embed: 'https://www.canva.com/design/DAHbBdb8ZVk/view?embed', link: 'https://canva.link/95amr91wqsko159' }
+				};
+				var modal = document.getElementById('brand-modal');
+				var iframe = document.getElementById('brand-modal-iframe');
+				var title = document.getElementById('brand-modal-title');
+				var openLink = document.getElementById('brand-modal-open');
+				function openBrand(key) {
+					var d = designs[key];
+					if (!d) return;
+					title.textContent = d.title;
+					openLink.href = d.link;
+					iframe.src = d.embed;
+					modal.classList.add('open');
+					modal.setAttribute('aria-hidden', 'false');
+					document.body.style.overflow = 'hidden';
+				}
+				function closeBrand() {
+					modal.classList.remove('open');
+					modal.setAttribute('aria-hidden', 'true');
+					iframe.src = 'about:blank';
+					document.body.style.overflow = '';
+				}
+				var buttons = document.querySelectorAll('.brand-btn');
+				for (var i = 0; i < buttons.length; i++) {
+					buttons[i].addEventListener('click', function () { openBrand(this.getAttribute('data-brand')); });
+				}
+				modal.querySelector('.brand-modal-close').addEventListener('click', closeBrand);
+				modal.addEventListener('click', function (e) { if (e.target === modal) closeBrand(); });
+				document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && modal.classList.contains('open')) closeBrand(); });
+			})();
+			</script>
 
 	</body>
 </html>
