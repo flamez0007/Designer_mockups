@@ -793,6 +793,14 @@ a:hover { color: var(--amber); }
 }
 
 @media (max-width: 760px) {
+  .site-header {
+    background: color-mix(in srgb, var(--sand) 92%, transparent);
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+    box-shadow: var(--shadow-sm);
+  }
+  .brand { font-size: 1.25rem; white-space: nowrap; }
+  .nav-cta .btn { display: none; }
   .nav-cta .nav-phone { display: none; }
   .nav-toggle { display: inline-flex; }
   .nav-links {
