@@ -119,7 +119,7 @@
 							<article id="contact">
 								<h2 class="major">Contact</h2>
 								<p>Tell me about your business and what needs a makeover — I'll reply within one business day.</p>
-								<form method="post">
+								<form method="post" id="contact-form">
 									<div class="fields">
 										<div class="field half">
 											<label for="name">Name</label>
@@ -139,6 +139,7 @@
 										<li><input type="reset" value="Reset" /></li>
 									</ul>
 								</form>
+								<p id="contact-status" role="status"></p>
 							</article>
 
 					</div>
@@ -202,6 +203,54 @@
 				modal.querySelector('.brand-modal-close').addEventListener('click', closeBrand);
 				modal.addEventListener('click', function (e) { if (e.target === modal) closeBrand(); });
 				document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && modal.classList.contains('open')) closeBrand(); });
+			})();
+			</script>
+
+		<!-- Contact form — sends to sammyclaxton7@gmail.com via FormSubmit -->
+			<script>
+			(function () {
+				var form = document.getElementById('contact-form');
+				if (!form) return;
+				var status = document.getElementById('contact-status');
+				var submitBtn = form.querySelector('input[type="submit"]');
+				form.addEventListener('submit', function (e) {
+					e.preventDefault();
+					var name = document.getElementById('name').value.trim();
+					var email = document.getElementById('email').value.trim();
+					var message = document.getElementById('message').value.trim();
+					if (!name || !email || !message) {
+						status.textContent = 'Please fill in your name, email and message first.';
+						return;
+					}
+					submitBtn.disabled = true;
+					submitBtn.value = 'Sending…';
+					status.textContent = 'Sending your message…';
+					fetch('https://formsubmit.co/ajax/sammyclaxton7@gmail.com', {
+						method: 'POST',
+						headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+						body: JSON.stringify({
+							_subject: 'Portfolio enquiry — ' + name,
+							_template: 'table',
+							_captcha: 'false',
+							_autoresponse: 'Thanks for getting in touch, ' + name + ' — your message is with me and I will reply within one business day. — Sammy',
+							name: name,
+							email: email,
+							message: message
+						})
+					}).then(function (res) { return res.json(); }).then(function (data) {
+						if (data && data.success !== false) {
+							status.textContent = 'Message sent — thanks! I will reply within one business day.';
+							form.reset();
+						} else {
+							throw new Error('send failed');
+						}
+					}).catch(function () {
+						status.innerHTML = 'That did not send — please email me directly at <a href="mailto:sammyclaxton7@gmail.com">sammyclaxton7@gmail.com</a>.';
+					}).finally(function () {
+						submitBtn.disabled = false;
+						submitBtn.value = 'Send Message';
+					});
+				});
 			})();
 			</script>
 
